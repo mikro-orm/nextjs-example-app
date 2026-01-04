@@ -9,7 +9,10 @@ export default function ResetUsersButton() {
   const handleClick = async () => {
     await resetUsers();
     console.log('Reset all users');
-    router.refresh();
+    const params = new URLSearchParams();
+    params.delete('before');
+    params.delete('after');
+    router.push(`?${params.toString()}`);
   };
 
   return (

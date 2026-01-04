@@ -60,10 +60,12 @@ export class User extends BaseEntity {
 }
 
 export const UserSchema = defineEntity({
+  name: 'User',
   class: User,
   tableName: 'user',
   repository: () => UserRepository,
   extends: BaseEntity,
+  constructorParams: ['fullName', 'email', 'password'],
   properties: {
     ...BaseProperties,
     fullName: p.string(),

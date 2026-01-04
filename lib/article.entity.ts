@@ -45,6 +45,7 @@ export const ArticleSchema = defineEntity({
   class: Article,
   tableName: 'article',
   repository: () => ArticleRepository,
+  constructorParams: ['author', 'title', 'description', 'text'],
   properties: {
     ...BaseProperties,
     slug: p.string().unique(),
