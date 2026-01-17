@@ -11,16 +11,16 @@
     "format": "oxfmt --write ."
   },
   "dependencies": {
-    "@mikro-orm/core": "7.0.0-dev.116",
-    "@mikro-orm/migrations": "7.0.0-dev.116",
-    "@mikro-orm/sqlite": "7.0.0-dev.116",
+    "@mikro-orm/core": "7.0.0-dev.137",
+    "@mikro-orm/migrations": "7.0.0-dev.137",
+    "@mikro-orm/sqlite": "7.0.0-dev.137",
     "argon2": "^0.44.0",
     "next": "16.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "7.0.0-dev.116",
+    "@mikro-orm/cli": "7.0.0-dev.137",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
