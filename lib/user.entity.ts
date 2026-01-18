@@ -10,7 +10,7 @@ import {
   ref,
 } from '@mikro-orm/sqlite';
 import { hash, verify } from 'argon2';
-import { BaseEntity, BaseProperties } from './base.entity';
+import { BaseEntity } from './base.entity';
 import { Article } from './article.entity';
 import { UserRepository } from './user.repository';
 
@@ -62,12 +62,11 @@ export class User extends BaseEntity {
 export const UserSchema = defineEntity({
   name: 'User',
   class: User,
+  extends: BaseEntity,
   tableName: 'user',
   repository: () => UserRepository,
-  extends: BaseEntity,
   constructorParams: ['fullName', 'email', 'password'],
   properties: {
-    ...BaseProperties,
     fullName: p.string(),
     email: p.string().unique().hidden(),
     password: p.string().hidden().lazy(),

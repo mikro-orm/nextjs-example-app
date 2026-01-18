@@ -11,23 +11,23 @@
     "format": "oxfmt --write ."
   },
   "dependencies": {
-    "@mikro-orm/core": "7.0.0-dev.137",
-    "@mikro-orm/migrations": "7.0.0-dev.137",
-    "@mikro-orm/sqlite": "7.0.0-dev.137",
+    "@mikro-orm/core": "7.0.0-dev.138",
+    "@mikro-orm/migrations": "7.0.0-dev.138",
+    "@mikro-orm/sqlite": "7.0.0-dev.138",
     "argon2": "^0.44.0",
-    "next": "16.1.0",
+    "next": "16.1.3",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "7.0.0-dev.137",
+    "@mikro-orm/cli": "7.0.0-dev.138",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.1.0",
-    "oxfmt": "^0.18.0",
+    "eslint-config-next": "16.1.3",
+    "oxfmt": "^0.24.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"

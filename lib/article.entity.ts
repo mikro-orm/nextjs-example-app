@@ -8,7 +8,7 @@ import {
   type Rel,
   type Opt,
 } from '@mikro-orm/sqlite';
-import { BaseEntity, BaseProperties } from './base.entity';
+import { BaseEntity } from './base.entity';
 import { User } from './user.entity';
 import { type Comment, CommentSchema } from './comment.entity';
 import { type Tag, TagSchema } from './tag.entity';
@@ -43,11 +43,11 @@ export class Article extends BaseEntity {
 
 export const ArticleSchema = defineEntity({
   class: Article,
+  extends: BaseEntity,
   tableName: 'article',
   repository: () => ArticleRepository,
   constructorParams: ['author', 'title', 'description', 'text'],
   properties: {
-    ...BaseProperties,
     slug: p.string().unique(),
     title: p.string().index(),
     description: p.string().length(1000),
