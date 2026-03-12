@@ -69,7 +69,7 @@ export const UserSchema = defineEntity({
   properties: {
     fullName: p.string(),
     email: p.string().unique().hidden(),
-    password: p.string().hidden().lazy(),
+    password: p.string().hidden().lazy().ref(),
     bio: p.text().default(''),
     articles: () => p.oneToMany(Article).mappedBy('author').hidden(),
     token: p.string().nullable().persist(false),
