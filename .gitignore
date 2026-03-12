@@ -42,3 +42,4 @@ yarn-error.log*
 next-env.d.ts
 
 sqlite.db
+.snapshot-sqlite.db.json

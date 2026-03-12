@@ -51,7 +51,7 @@ export const ArticleSchema = defineEntity({
     slug: p.string().unique(),
     title: p.string().index(),
     description: p.string().length(1000),
-    text: p.text().lazy(),
+    text: p.text().lazy().ref(),
     tags: () => p.manyToMany(TagSchema),
     author: () => p.manyToOne(User).ref(),
     comments: () => p.oneToMany(CommentSchema).mappedBy('article').eager().orphanRemoval(),
