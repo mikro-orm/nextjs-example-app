@@ -13,16 +13,16 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@mikro-orm/core": "^7.0.1",
-    "@mikro-orm/migrations": "^7.0.1",
-    "@mikro-orm/sqlite": "^7.0.1",
+    "@mikro-orm/core": "^7.0.6",
+    "@mikro-orm/migrations": "^7.0.6",
+    "@mikro-orm/sqlite": "^7.0.6",
     "argon2": "^0.44.0",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^7.0.1",
+    "@mikro-orm/cli": "^7.0.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24.0.0",
     "@types/react": "^19",
