@@ -17,7 +17,7 @@
     "@mikro-orm/migrations": "^7.0.6",
     "@mikro-orm/sqlite": "^7.0.6",
     "argon2": "^0.44.0",
-    "next": "16.2.1",
+    "next": "16.2.3",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
