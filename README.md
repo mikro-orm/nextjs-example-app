@@ -1,3 +1,9 @@
+# MikroORM + Next.js example
+
+Example blog app showing [MikroORM](https://mikro-orm.io) inside a Next.js server, including entities with relations and embeddables, custom repositories, a virtual entity for listing, lifecycle hooks, lazy scalar properties and migrations. The entities are defined via `defineEntity`.
+
+An alternative version of the same app using the decorator API lives on the [`decorators` branch](https://github.com/mikro-orm/nextjs-example-app/tree/decorators).
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
