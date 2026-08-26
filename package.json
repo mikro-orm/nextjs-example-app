@@ -13,22 +13,24 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@mikro-orm/core": "^7.0.6",
-    "@mikro-orm/migrations": "^7.0.6",
-    "@mikro-orm/sqlite": "^7.0.6",
+    "@mikro-orm/core": "7.1.15-dev.1",
+    "@mikro-orm/decorators": "7.1.15-dev.1",
+    "@mikro-orm/migrations": "7.1.15-dev.1",
+    "@mikro-orm/sqlite": "7.1.15-dev.1",
     "argon2": "^0.45.0",
     "next": "16.3.3",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^7.0.6",
+    "@mikro-orm/cli": "7.1.15-dev.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "oxlint": "^1",
     "oxfmt": "^0.65.0",
+    "oxlint": "^1",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^7.0.0",

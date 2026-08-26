@@ -1,14 +1,13 @@
-import { defineEntity, type InferEntity, p } from '@mikro-orm/sqlite';
+import { Collection } from '@mikro-orm/sqlite';
+import { Entity, ManyToMany, Property } from '@mikro-orm/decorators/legacy';
 import { Article } from './article.entity';
 import { BaseEntity } from './base.entity';
 
-export const TagSchema = defineEntity({
-  name: 'Tag',
-  extends: BaseEntity,
-  properties: {
-    name: p.string().length(20),
-    articles: () => p.manyToMany(Article).mappedBy('tags'),
-  },
-});
+@Entity({ tableName: 'tag' })
+export class Tag extends BaseEntity {
+  @Property({ type: 'string', length: 20 })
+  name!: string;
 
-export type Tag = InferEntity<typeof TagSchema> & BaseEntity;
+  @ManyToMany({ entity: () => Article, mappedBy: 'tags' })
+  articles = new Collection<Article>(this);
+}

@@ -1,39 +1,55 @@
+import { Collection, EntityRepositoryType, type EventArgs, type Opt, type Ref, ref } from '@mikro-orm/sqlite';
 import {
-  Collection,
-  defineEntity,
-  p,
-  EntityRepositoryType,
-  type EventArgs,
-  type Opt,
-  type InferEntity,
-  Ref,
-  ref,
-} from '@mikro-orm/sqlite';
+  BeforeCreate,
+  BeforeUpdate,
+  Embeddable,
+  Embedded,
+  Entity,
+  OneToMany,
+  Property,
+} from '@mikro-orm/decorators/legacy';
 import { hash, verify } from 'argon2';
 import { BaseEntity } from './base.entity';
 import { Article } from './article.entity';
 import { UserRepository } from './user.repository';
 
-export const Social = defineEntity({
-  name: 'Social',
-  embeddable: true,
-  properties: {
-    twitter: p.string().nullable(),
-    facebook: p.string().nullable(),
-    linkedin: p.string().nullable(),
-  },
-});
+@Embeddable()
+export class Social {
+  @Property({ type: 'string', nullable: true })
+  twitter?: string;
 
-export type ISocial = InferEntity<typeof Social>;
+  @Property({ type: 'string', nullable: true })
+  facebook?: string;
 
+  @Property({ type: 'string', nullable: true })
+  linkedin?: string;
+}
+
+export type ISocial = Social;
+
+@Entity({ tableName: 'user', repository: () => UserRepository })
 export class User extends BaseEntity {
   [EntityRepositoryType]?: UserRepository;
+
+  @Property({ type: 'string' })
   fullName: string;
+
+  @Property({ type: 'string', unique: true, hidden: true })
   email: string;
+
+  @Property({ type: 'string', hidden: true, lazy: true, ref: true })
   password: Ref<string>;
+
+  @Property({ type: 'text', default: '' })
   bio: string & Opt = '';
+
+  @OneToMany({ entity: () => Article, mappedBy: 'author', hidden: true })
   articles = new Collection<Article>(this);
+
+  @Property({ type: 'string', nullable: true, persist: false })
   token?: string;
+
+  @Embedded({ entity: () => Social, object: true, nullable: true })
   social?: ISocial;
 
   constructor(fullName: string, email: string, password: string) {
@@ -43,6 +59,8 @@ export class User extends BaseEntity {
     this.password = ref(password);
   }
 
+  @BeforeCreate()
+  @BeforeUpdate()
   async hashPassword(args: EventArgs<User>) {
     // hash only if the value changed
     // FIXME cast shouldn't be needed, scalar refs should be unwrapped in the payload
@@ -58,25 +76,3 @@ export class User extends BaseEntity {
     return verify(hash, password);
   }
 }
-
-export const UserSchema = defineEntity({
-  name: 'User',
-  class: User,
-  extends: BaseEntity,
-  tableName: 'user',
-  repository: () => UserRepository,
-  constructorParams: ['fullName', 'email', 'password'],
-  properties: {
-    fullName: p.string(),
-    email: p.string().unique().hidden(),
-    password: p.string().hidden().lazy().ref(),
-    bio: p.text().default(''),
-    articles: () => p.oneToMany(Article).mappedBy('author').hidden(),
-    token: p.string().nullable().persist(false),
-    social: () => p.embedded(Social).object(true).nullable(),
-  },
-  hooks: {
-    beforeCreate: ['hashPassword'],
-    beforeUpdate: ['hashPassword'],
-  },
-});

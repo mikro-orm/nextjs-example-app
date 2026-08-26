@@ -1,16 +1,17 @@
-import { defineEntity, type InferEntity, p } from '@mikro-orm/sqlite';
+import { type Ref } from '@mikro-orm/sqlite';
+import { Entity, ManyToOne, Property } from '@mikro-orm/decorators/legacy';
 import { Article } from './article.entity';
 import { User } from './user.entity';
 import { BaseEntity } from './base.entity';
 
-export const CommentSchema = defineEntity({
-  name: 'Comment',
-  extends: BaseEntity,
-  properties: {
-    text: p.string(),
-    article: () => p.manyToOne(Article).ref(),
-    author: () => p.manyToOne(User).ref(),
-  },
-});
+@Entity({ tableName: 'comment' })
+export class Comment extends BaseEntity {
+  @Property({ type: 'string' })
+  text!: string;
 
-export type Comment = InferEntity<typeof CommentSchema>;
+  @ManyToOne({ entity: () => Article, ref: true })
+  article!: Ref<Article>;
+
+  @ManyToOne({ entity: () => User, ref: true })
+  author!: Ref<User>;
+}

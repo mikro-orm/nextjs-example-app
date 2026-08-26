@@ -1,17 +1,17 @@
 import { MikroORM, RequestContext } from '@mikro-orm/sqlite';
 import { wrap } from '@mikro-orm/core';
-import { User, UserSchema, Social } from '@/lib/user.entity';
-import { ArticleSchema } from '@/lib/article.entity';
-import { ArticleListingSchema } from '@/lib/article-listing.entity';
-import { TagSchema } from '@/lib/tag.entity';
-import { CommentSchema } from '@/lib/comment.entity';
+import { User, Social } from '@/lib/user.entity';
+import { Article } from '@/lib/article.entity';
+import { ArticleListing } from '@/lib/article-listing.entity';
+import { Tag } from '@/lib/tag.entity';
+import { Comment } from '@/lib/comment.entity';
 
 let orm: MikroORM;
 
 beforeAll(async () => {
   orm = new MikroORM({
     dbName: ':memory:',
-    entities: [UserSchema, ArticleSchema, ArticleListingSchema, TagSchema, Social, CommentSchema],
+    entities: [User, Article, ArticleListing, Tag, Social, Comment],
   });
 
   await orm.schema.drop();

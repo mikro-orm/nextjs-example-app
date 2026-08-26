@@ -1,20 +1,32 @@
-import { defineEntity, p, EntityManager, type InferEntity } from '@mikro-orm/sqlite';
+import { type EntityManager } from '@mikro-orm/sqlite';
+import { Entity, Property } from '@mikro-orm/decorators/legacy';
 import { Article } from './article.entity';
 
-export const ArticleListingSchema = defineEntity({
-  name: 'ArticleListing',
+@Entity({
+  tableName: 'article_listing',
   expression: (em: EntityManager) => {
     return em.getRepository(Article).listArticlesQuery();
   },
-  properties: {
-    slug: p.string(),
-    title: p.string(),
-    description: p.string(),
-    tags: p.array(),
-    author: p.integer(),
-    authorName: p.string(),
-    totalComments: p.integer(),
-  },
-});
+})
+export class ArticleListing {
+  @Property({ type: 'string' })
+  slug!: string;
 
-export type ArticleListing = InferEntity<typeof ArticleListingSchema>;
+  @Property({ type: 'string' })
+  title!: string;
+
+  @Property({ type: 'string' })
+  description!: string;
+
+  @Property({ type: 'string[]' })
+  tags!: string[];
+
+  @Property({ type: 'integer' })
+  author!: number;
+
+  @Property({ type: 'string' })
+  authorName!: string;
+
+  @Property({ type: 'integer' })
+  totalComments!: number;
+}

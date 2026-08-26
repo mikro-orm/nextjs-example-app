@@ -1,17 +1,9 @@
-import {
-  Collection,
-  defineEntity,
-  p,
-  EntityRepositoryType,
-  ref,
-  type Ref,
-  type Rel,
-  type Opt,
-} from '@mikro-orm/sqlite';
+import { Collection, EntityRepositoryType, ref, type Ref, type Rel, type Opt } from '@mikro-orm/sqlite';
+import { Entity, ManyToMany, ManyToOne, OneToMany, Property } from '@mikro-orm/decorators/legacy';
 import { BaseEntity } from './base.entity';
 import { User } from './user.entity';
-import { type Comment, CommentSchema } from './comment.entity';
-import { type Tag, TagSchema } from './tag.entity';
+import { Comment } from './comment.entity';
+import { Tag } from './tag.entity';
 import { ArticleRepository } from './article.repository';
 
 function convertToSlug(title: string) {
@@ -21,14 +13,29 @@ function convertToSlug(title: string) {
     .replace(/ +/g, '-');
 }
 
+@Entity({ tableName: 'article', repository: () => ArticleRepository })
 export class Article extends BaseEntity {
   [EntityRepositoryType]?: ArticleRepository;
+
+  @Property({ type: 'string', unique: true })
   slug: string & Opt;
+
+  @Property({ type: 'string', index: true })
   title: string;
+
+  @Property({ type: 'string', length: 1000 })
   description: string;
+
+  @Property({ type: 'text', lazy: true, ref: true })
   text: Ref<string>;
+
+  @ManyToMany({ entity: () => Tag, pivotTable: 'article_tags' })
   tags = new Collection<Tag>(this);
+
+  @ManyToOne({ entity: () => User, ref: true })
   author: Ref<User>;
+
+  @OneToMany({ entity: () => Comment, mappedBy: 'article', eager: true, orphanRemoval: true })
   comments = new Collection<Comment>(this);
 
   constructor(author: Rel<User>, title: string, description = '', text = '') {
@@ -40,20 +47,3 @@ export class Article extends BaseEntity {
     this.slug = convertToSlug(title);
   }
 }
-
-export const ArticleSchema = defineEntity({
-  class: Article,
-  extends: BaseEntity,
-  tableName: 'article',
-  repository: () => ArticleRepository,
-  constructorParams: ['author', 'title', 'description', 'text'],
-  properties: {
-    slug: p.string().unique(),
-    title: p.string().index(),
-    description: p.string().length(1000),
-    text: p.text().lazy().ref(),
-    tags: () => p.manyToMany(TagSchema),
-    author: () => p.manyToOne(User).ref(),
-    comments: () => p.oneToMany(CommentSchema).mappedBy('article').eager().orphanRemoval(),
-  },
-});

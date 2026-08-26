@@ -8,9 +8,9 @@ import {
   IMigrator,
 } from '@mikro-orm/sqlite';
 import { User } from '@/lib/user.entity';
-import { Comment, CommentSchema } from '@/lib/comment.entity';
+import { Comment } from '@/lib/comment.entity';
 import { Article } from '@/lib/article.entity';
-import { Tag, TagSchema } from '@/lib/tag.entity';
+import { Tag } from '@/lib/tag.entity';
 import { UserRepository } from '@/lib/user.repository';
 import { ArticleRepository } from '@/lib/article.repository';
 import config from '@/mikro-orm.config';
@@ -50,9 +50,9 @@ export async function initORM(options?: Options, migrate = true): Promise<Servic
     schema: orm.schema,
     migrator: orm.migrator,
     article: orm.em.getRepository(Article),
-    comment: orm.em.getRepository(CommentSchema),
+    comment: orm.em.getRepository(Comment),
     user: orm.em.getRepository(User),
-    tag: orm.em.getRepository(TagSchema),
+    tag: orm.em.getRepository(Tag),
   });
 }
 

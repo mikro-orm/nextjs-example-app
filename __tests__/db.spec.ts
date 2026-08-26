@@ -1,16 +1,16 @@
 import { MikroORM } from '@mikro-orm/sqlite';
-import { User, UserSchema, Social } from '@/lib/user.entity';
-import { Article, ArticleSchema } from '@/lib/article.entity';
-import { ArticleListingSchema } from '@/lib/article-listing.entity';
-import { TagSchema } from '@/lib/tag.entity';
-import { CommentSchema } from '@/lib/comment.entity';
+import { User, Social } from '@/lib/user.entity';
+import { Article } from '@/lib/article.entity';
+import { ArticleListing } from '@/lib/article-listing.entity';
+import { Tag } from '@/lib/tag.entity';
+import { Comment } from '@/lib/comment.entity';
 
 let orm: MikroORM;
 
 beforeAll(async () => {
   orm = new MikroORM({
     dbName: ':memory:',
-    entities: [UserSchema, ArticleSchema, ArticleListingSchema, TagSchema, Social, CommentSchema],
+    entities: [User, Article, ArticleListing, Tag, Social, Comment],
   });
 
   await orm.schema.drop();
@@ -133,8 +133,8 @@ describe('Tag entity', () => {
     const em = orm.em.fork();
     const article = await em.findOneOrFail(Article, { slug: 'my-first-article' }, { populate: ['tags'] });
 
-    const tag1 = em.create(TagSchema, { name: 'typescript' });
-    const tag2 = em.create(TagSchema, { name: 'orm' });
+    const tag1 = em.create(Tag, { name: 'typescript' });
+    const tag2 = em.create(Tag, { name: 'orm' });
     article.tags.add(tag1, tag2);
     await em.flush();
 
@@ -159,7 +159,7 @@ describe('Comment entity', () => {
     const author = await em.findOneOrFail(User, { email: 'john@example.com' });
     const article = await em.findOneOrFail(Article, { slug: 'my-first-article' });
 
-    const comment = em.create(CommentSchema, {
+    const comment = em.create(Comment, {
       text: 'Great article!',
       article,
       author,
@@ -173,7 +173,7 @@ describe('Comment entity', () => {
   test('comments are eagerly loaded with article', async () => {
     const em = orm.em.fork();
     const article = await em.findOneOrFail(Article, { slug: 'my-first-article' });
-    // comments are defined as eager in ArticleSchema
+    // comments are defined as eager in Article
     expect(article.comments).toHaveLength(1);
     expect(article.comments[0].text).toBe('Great article!');
   });
@@ -186,7 +186,7 @@ describe('Comment entity', () => {
     article.comments.removeAll();
     await em.flush();
 
-    const comments = await em.fork().find(CommentSchema, { article });
+    const comments = await em.fork().find(Comment, { article });
     expect(comments).toHaveLength(0);
   });
 });

@@ -1,23 +1,15 @@
-import { p, defineEntity, Opt, PrimaryKeyProp } from '@mikro-orm/sqlite';
-
-export const BaseProperties = {
-  id: p.integer().primary(),
-  createdAt: p.datetime().onCreate(() => new Date()),
-  updatedAt: p
-    .datetime()
-    .onCreate(() => new Date())
-    .onUpdate(() => new Date()),
-};
+import { type Opt, PrimaryKeyProp } from '@mikro-orm/sqlite';
+import { PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
 
 export abstract class BaseEntity {
   [PrimaryKeyProp]?: 'id';
+
+  @PrimaryKey({ type: 'integer' })
   id!: number;
+
+  @Property({ type: 'datetime', onCreate: () => new Date() })
   createdAt: Date & Opt = new Date();
+
+  @Property({ type: 'datetime', onCreate: () => new Date(), onUpdate: () => new Date() })
   updatedAt: Date & Opt = new Date();
 }
-
-export const BaseSchema = defineEntity({
-  class: BaseEntity,
-  name: 'BaseEntity',
-  properties: BaseProperties,
-});
