@@ -1,4 +1,4 @@
-import { p, defineEntity, Opt } from '@mikro-orm/sqlite';
+import { p, defineEntity, Opt, PrimaryKeyProp } from '@mikro-orm/sqlite';
 
 export const BaseProperties = {
   id: p.integer().primary(),
@@ -10,6 +10,7 @@ export const BaseProperties = {
 };
 
 export abstract class BaseEntity {
+  [PrimaryKeyProp]?: 'id';
   id!: number;
   createdAt: Date & Opt = new Date();
   updatedAt: Date & Opt = new Date();
