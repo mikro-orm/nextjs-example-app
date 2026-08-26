@@ -13,6 +13,6 @@ export default defineConfig({
   debug: true,
   extensions: [Migrator],
   migrations: {
-    migrationsList: [Migration20251221173216],
+    migrationsList: [{ name: 'Migration20251221173216', class: Migration20251221173216 }],
   },
 });

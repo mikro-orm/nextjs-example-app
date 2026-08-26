@@ -1,9 +1,7 @@
-import { type Opt, PrimaryKeyProp } from '@mikro-orm/sqlite';
+import { type Opt } from '@mikro-orm/sqlite';
 import { PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
 
 export abstract class BaseEntity {
-  [PrimaryKeyProp]?: 'id';
-
   @PrimaryKey({ type: 'integer' })
   id!: number;
 
